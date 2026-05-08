@@ -220,21 +220,6 @@ The final report will focus on the following points:
 | **LLM Integration / Prompt Engineering Lead** | 이유라 |
 | **PM / Planning / Documentation / Presentation Coordination** | 박재형 |
 
----
-
-## ⚠️ Project Focus
-
-Although this project uses a medical cost risk scenario, the core contribution is **algorithmic comparison**.
-
-The LLM is **not** the main algorithm.
-
-It is used only as an optional explanation module after the Top-K selection algorithms produce their results.
-
-> **Main Focus:**  
-> Top-K selection, time complexity comparison, execution time analysis, and visualization.
-
----
-
 <div align="center">
 
 ### KINGorithm  
