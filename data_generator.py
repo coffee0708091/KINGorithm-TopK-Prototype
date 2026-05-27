@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import random
 
 
@@ -47,7 +47,6 @@ def generate_patients(n: int) -> list[dict]:
         patients.append(patient)
 
     return patients
-=======
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -137,4 +136,3 @@ def run_top_k_algorithms(request: TopKRequest):
         },
         "top_patients_sample": sorting_result[:20]
     }
->>>>>>> 2e362accb05e186d0119b924855e807741b5a8d3

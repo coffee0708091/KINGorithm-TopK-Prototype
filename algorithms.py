@@ -2,6 +2,14 @@ import heapq
 import random
 
 
+def patient_key(patient: dict) -> tuple:
+    """
+    Higher risk_score is better.
+    If risk_score is the same, higher id is used as a tie-breaker.
+    """
+    return (patient["risk_score"], patient["id"])
+
+
 def full_sorting_top_k(patients: list[dict], k: int) -> list[dict]:
     """
     Select top-k patients by sorting all patients.
@@ -10,7 +18,7 @@ def full_sorting_top_k(patients: list[dict], k: int) -> list[dict]:
 
     sorted_patients = sorted(
         patients,
-        key=lambda patient: patient["risk_score"],
+        key=patient_key,
         reverse=True
     )
 
@@ -23,6 +31,9 @@ def heap_top_k(patients: list[dict], k: int) -> list[dict]:
     Time Complexity: O(n log k)
     """
 
+    if k <= 0:
+        return []
+
     heap = []
 
     for patient in patients:
@@ -31,12 +42,13 @@ def heap_top_k(patients: list[dict], k: int) -> list[dict]:
         if len(heap) < k:
             heapq.heappush(heap, item)
         else:
-            if item[0] > heap[0][0]:
+            if (item[0], item[1]) > (heap[0][0], heap[0][1]):
                 heapq.heapreplace(heap, item)
 
     result = [item[2] for item in heap]
 
-    return sorted(result, key=lambda patient: patient["risk_score"], reverse=True)
+    # For display and validation consistency
+    return sorted(result, key=patient_key, reverse=True)
 
 
 def quickselect_top_k(patients: list[dict], k: int) -> list[dict]:
@@ -44,19 +56,32 @@ def quickselect_top_k(patients: list[dict], k: int) -> list[dict]:
     Select top-k patients using Quickselect.
     Average Time Complexity: O(n)
     Worst Time Complexity: O(n^2)
+
+    Important:
+    This function does NOT sort the final top-k result.
+    It only selects the top-k patients.
     """
+
+    if k <= 0:
+        return []
 
     arr = patients[:]
 
+    if k >= len(arr):
+        return arr
+
+    def is_greater(a: dict, b: dict) -> bool:
+        return patient_key(a) > patient_key(b)
+
     def partition(left: int, right: int, pivot_index: int) -> int:
-        pivot_score = arr[pivot_index]["risk_score"]
+        pivot_patient = arr[pivot_index]
 
         arr[pivot_index], arr[right] = arr[right], arr[pivot_index]
 
         store_index = left
 
         for i in range(left, right):
-            if arr[i]["risk_score"] > pivot_score:
+            if is_greater(arr[i], pivot_patient):
                 arr[store_index], arr[i] = arr[i], arr[store_index]
                 store_index += 1
 
@@ -75,14 +100,7 @@ def quickselect_top_k(patients: list[dict], k: int) -> list[dict]:
             else:
                 right = pivot_index - 1
 
-    if k <= 0:
-        return []
-
-    if k >= len(arr):
-        return sorted(arr, key=lambda patient: patient["risk_score"], reverse=True)
-
     select(0, len(arr) - 1, k - 1)
 
-    result = arr[:k]
-
-    return sorted(result, key=lambda patient: patient["risk_score"], reverse=True)
+    # Return top-k only, without sorting.
+    return arr[:k]

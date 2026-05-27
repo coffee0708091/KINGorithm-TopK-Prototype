@@ -3,10 +3,15 @@ let latestSelectedIds = new Set();
 
 const generateBtn = document.getElementById("generateBtn");
 const runBtn = document.getElementById("runBtn");
+
 const patientCountInput = document.getElementById("patientCount");
+const riskRatioInput = document.getElementById("riskRatio");
+const repetitionsInput = document.getElementById("repetitions");
+
 const resultTable = document.getElementById("resultTable");
 const validationBox = document.getElementById("validationBox");
 const patientList = document.getElementById("patientList");
+
 const canvas = document.getElementById("riskCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -15,6 +20,17 @@ runBtn.addEventListener("click", runAlgorithms);
 
 async function generatePatients() {
     const n = Number(patientCountInput.value);
+
+    if (!n || n <= 0) {
+        alert("Please enter a valid number of patients.");
+        return;
+    }
+
+    resultTable.innerHTML = `
+        <tr>
+            <td colspan="3">Generating patient data...</td>
+        </tr>
+    `;
 
     const response = await fetch("/generate", {
         method: "POST",
@@ -40,24 +56,52 @@ async function generatePatients() {
         </tr>
     `;
 
-    validationBox.textContent = "";
+    validationBox.innerHTML = "";
     patientList.innerHTML = "";
+
     drawCanvas(latestPatients, latestSelectedIds);
 }
 
 async function runAlgorithms() {
+    const ratio = Number(riskRatioInput.value);
+    const repetitions = Number(repetitionsInput.value);
+
+    if (!ratio || ratio <= 0 || ratio > 1) {
+        alert("Top-K Ratio must be between 0 and 1.");
+        return;
+    }
+
+    if (!repetitions || repetitions <= 0) {
+        alert("Repetitions must be greater than 0.");
+        return;
+    }
+
+    resultTable.innerHTML = `
+        <tr>
+            <td colspan="3">Running algorithms...</td>
+        </tr>
+    `;
+
     const response = await fetch("/top-k-risk", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ ratio: 0.2 })
+        body: JSON.stringify({
+            ratio: ratio,
+            repetitions: repetitions
+        })
     });
 
     const data = await response.json();
 
     if (data.error) {
         alert(data.error);
+        resultTable.innerHTML = `
+            <tr>
+                <td colspan="3">No result yet</td>
+            </tr>
+        `;
         return;
     }
 
@@ -98,14 +142,24 @@ function renderValidation(data) {
     const quickOk = data.validation.quickselect_matches_sorting;
 
     validationBox.innerHTML = `
-        Patients: ${data.n} / Top-K: ${data.k}<br>
-        Heap result matches sorting: ${heapOk ? "✅ true" : "❌ false"}<br>
-        Quickselect result matches sorting: ${quickOk ? "✅ true" : "❌ false"}
+        <div class="summary-box">
+            <strong>Patients:</strong> ${data.n}<br>
+            <strong>Top-K Ratio:</strong> ${data.ratio}<br>
+            <strong>Selected Patients:</strong> ${data.k}<br>
+            <strong>Repetitions:</strong> ${data.repetitions}<br>
+            <strong>Heap result matches sorting:</strong> ${heapOk ? "✅ true" : "❌ false"}<br>
+            <strong>Quickselect result matches sorting:</strong> ${quickOk ? "✅ true" : "❌ false"}
+        </div>
     `;
 }
 
 function renderTopPatients(patients) {
     patientList.innerHTML = "";
+
+    if (patients.length === 0) {
+        patientList.innerHTML = "<p>No selected patient sample.</p>";
+        return;
+    }
 
     patients.forEach(patient => {
         const div = document.createElement("div");
@@ -116,6 +170,7 @@ function renderTopPatients(patients) {
             Risk Score: ${patient.risk_score} /
             Age: ${patient.age} /
             Visits: ${patient.visit_count} /
+            Chronic Diseases: ${patient.chronic_disease_count} /
             Previous Cost: ${patient.previous_medical_cost.toLocaleString()} KRW
         `;
 

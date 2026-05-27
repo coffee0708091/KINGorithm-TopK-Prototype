@@ -5,8 +5,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
+    background: #eef1f4;
+    color: #111827;
 }
 
 .container {
@@ -22,84 +22,142 @@ header {
 
 header h1 {
     margin-bottom: 8px;
-    font-size: 36px;
+    font-size: 38px;
 }
 
 header p {
     color: #666;
+    font-size: 16px;
 }
 
+/* 구역 카드 */
 .panel {
-    background: white;
-    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #d8dee6;
+    border-radius: 18px;
     padding: 24px;
     margin-bottom: 24px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-label {
+.panel h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+/* 입력 구역 */
+.control-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
     font-weight: bold;
-    margin-right: 8px;
+    font-size: 14px;
 }
 
 input {
-    padding: 10px;
-    width: 160px;
-    border: 1px solid #ccc;
+    padding: 10px 12px;
+    width: 170px;
+    border: 1px solid #bfc7d1;
     border-radius: 8px;
-    margin-right: 8px;
+    font-size: 15px;
+    background: #ffffff;
+}
+
+input:focus {
+    outline: none;
+    border-color: #111827;
+}
+
+/* 버튼 */
+.button-group {
+    display: flex;
+    gap: 8px;
 }
 
 button {
-    padding: 10px 16px;
+    padding: 11px 18px;
     border: none;
     border-radius: 8px;
-    background: #222;
+    background: #111827;
     color: white;
     cursor: pointer;
-    margin-right: 8px;
+    font-weight: bold;
 }
 
 button:hover {
-    background: #444;
+    background: #374151;
 }
 
+/* 표 */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 12px;
+    margin-top: 16px;
+    background: white;
 }
 
 th, td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+    padding: 13px;
+    border-bottom: 1px solid #d1d5db;
     text-align: center;
 }
 
 th {
-    background: #f0f0f0;
-}
-
-#validationBox {
-    margin-top: 16px;
+    background: #e5e7eb;
     font-weight: bold;
 }
 
+tr:hover {
+    background: #f9fafb;
+}
+
+/* 설명 텍스트 */
+.hint {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+/* 검증 결과 박스 */
+#validationBox {
+    margin-top: 18px;
+}
+
+.summary-box {
+    padding: 16px;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    line-height: 1.8;
+}
+
+/* 캔버스 */
 canvas {
     width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    max-width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
     background: #ffffff;
+    display: block;
 }
 
-.hint {
-    color: #666;
-    font-size: 14px;
-}
-
+/* 환자 카드 */
 .patient-card {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #fafafa;
 }
 
 .patient-card strong {
