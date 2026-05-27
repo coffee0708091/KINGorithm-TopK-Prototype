@@ -3,9 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>KINGorithm</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>KINGorithm</h1>
-    <p>Medical Cost Risk Top-K Selection Algorithm Web App</p>
+    <div class="container">
+        <header>
+            <h1>🩺 KINGorithm</h1>
+            <p>Medical Cost Risk Top-K Selection Algorithm Web App</p>
+        </header>
+
+        <section class="panel">
+            <label for="patientCount">Number of Patients</label>
+            <input type="number" id="patientCount" value="1000" min="1">
+
+            <button id="generateBtn">Generate Patients</button>
+            <button id="runBtn">Run Algorithms</button>
+        </section>
+
+        <section class="panel">
+            <h2>Algorithm Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Time (ms)</th>
+                        <th>Speedup vs Sorting</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTable">
+                    <tr>
+                        <td colspan="3">No result yet</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="validationBox"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Risk Distribution</h2>
+            <p class="hint">X-axis: Previous Medical Cost / Y-axis: Risk Score</p>
+            <canvas id="riskCanvas" width="900" height="500"></canvas>
+        </section>
+
+        <section class="panel">
+            <h2>Top High-Risk Patients Sample</h2>
+            <div id="patientList"></div>
+        </section>
+    </div>
+
+    <script src="/static/app.js"></script>
 </body>
 </html>

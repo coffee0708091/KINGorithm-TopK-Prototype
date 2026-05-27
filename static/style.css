@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+    font-size: 36px;
+}
+
+header p {
+    color: #666;
+}
+
+.panel {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+label {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+input {
+    padding: 10px;
+    width: 160px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-right: 8px;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #222;
+    color: white;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+button:hover {
+    background: #444;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #f0f0f0;
+}
+
+#validationBox {
+    margin-top: 16px;
+    font-weight: bold;
+}
+
+canvas {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.hint {
+    color: #666;
+    font-size: 14px;
+}
+
+.patient-card {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.patient-card strong {
+    color: #b00020;
+}

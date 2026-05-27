@@ -85,5 +85,7 @@ def run_top_k_algorithms(request: TopKRequest):
             "heap_matches_sorting": sorting_ids == heap_ids,
             "quickselect_matches_sorting": sorting_ids == quickselect_ids
         },
-        "top_patients_sample": sorting_result[:20]
+        "top_patients_sample": sorting_result[:20],
+        "patients": current_patients[:100],
+        "selected_ids": list(sorting_ids)
     }
